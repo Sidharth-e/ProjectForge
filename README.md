@@ -1,59 +1,113 @@
 # ProjectForge
 
-A powerful PowerShell script to quickly create Next.js and Node.js projects with the latest versions and proper folder structures.
+A powerful project setup automation tool that creates Next.js frontend, Node.js backend, or full-stack projects with a single command.
 
-## Features
+## 🚀 Features
 
-- 🚀 **Latest Versions**: Always uses the most recent versions of Next.js and Node.js
-- 📁 **Proper Structure**: Creates well-organized folder structures for both project types
-- 🎨 **SCSS Support**: Built-in SCSS support for Next.js projects (no Tailwind by default)
-- 📝 **TypeScript Ready**: Full TypeScript support for both project types
-- 🔧 **Package Manager Support**: Works with npm, yarn, or pnpm
-- 🎯 **Flexible Options**: Create Next.js, Node.js, or both projects simultaneously
+- **Multiple Project Types**: Create Next.js, Node.js, or full-stack projects
+- **Smart Project Structure**: Automatically generates organized folder structures
+- **TypeScript Support**: Built-in TypeScript configuration (enabled by default)
+- **SCSS Support**: Modern SCSS setup with variables, mixins, and component styles
+- **Package Manager Flexibility**: Support for npm, Yarn, and pnpm
+- **Interactive & Direct Modes**: Run interactively or with command-line parameters
+- **Cross-Platform**: Available for both Windows (PowerShell) and Linux/macOS (Bash)
+- **Error Handling**: Robust error handling with automatic cleanup on failures
 
-## Prerequisites
+## 📋 Prerequisites
 
-- Windows PowerShell 5.1 or PowerShell Core 6+
-- Node.js (latest LTS version recommended)
-- npm, yarn, or pnpm (optional, npm will be used if others aren't available)
+- **Node.js** (version 14 or higher)
+- **npm** (comes with Node.js)
+- **Optional**: Yarn or pnpm for alternative package management
 
-## Usage
+## 🛠️ Installation
 
-### Basic Usage
+1. Clone or download this repository
+2. Navigate to the ProjectForge directory
+3. Choose your platform:
 
+### Windows (PowerShell)
 ```powershell
-# Create a Next.js project
-.\setup.ps1 -ProjectType "nextjs" -ProjectName "my-nextjs-app"
+# Make sure PowerShell execution policy allows running scripts
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
-# Create a Node.js project
-.\setup.ps1 -ProjectType "nodejs" -ProjectName "my-nodejs-api"
-
-# Create both projects in one go
-.\setup.ps1 -ProjectType "both" -ProjectName "my-fullstack-app"
+# Run the setup script
+.\setup.ps1
 ```
 
-### Advanced Options
+### Linux/macOS (Bash)
+```bash
+# Make the script executable
+chmod +x setup.sh
 
-```powershell
-# Use specific package manager
-.\setup.ps1 -ProjectType "nextjs" -ProjectName "my-app" -UseYarn
-
-# Disable TypeScript
-.\setup.ps1 -ProjectType "nextjs" -ProjectName "my-app" -UseTypeScript:$false
-
-# Disable SCSS (will use CSS instead)
-.\setup.ps1 -ProjectType "nextjs" -ProjectName "my-app" -UseSCSS:$false
-
-# Specify custom project path
-.\setup.ps1 -ProjectType "nextjs" -ProjectName "my-app" -ProjectPath "C:\Projects"
+# Run the setup script
+./setup.sh
 ```
 
-## Project Types
+## 📖 Usage
 
-### Next.js Project Structure
+### Interactive Mode (Recommended for first-time users)
+```bash
+# Windows
+.\setup.ps1
 
+# Linux/macOS
+./setup.sh
 ```
-my-nextjs-app/
+
+### Direct Mode with Parameters
+```bash
+# Windows
+.\setup.ps1 -ProjectType "nextjs" -ProjectName "myapp"
+
+# Linux/macOS
+./setup.sh -t "nextjs" -p "myapp"
+```
+
+### Command Line Options
+
+| Option | PowerShell | Bash | Description |
+|--------|------------|------|-------------|
+| Project Type | `-ProjectType` | `-t, --type` | Project type: `nextjs`, `nodejs`, or `both` |
+| Project Name | `-ProjectName` | `-p, --project` | Name for your project |
+| Project Path | `-ProjectPath` | `--path` | Directory to create project in (default: current) |
+| Use Yarn | `-UseYarn` | `--yarn` | Use Yarn instead of npm |
+| Use pnpm | `-UsePnpm` | `--pnpm` | Use pnpm instead of npm |
+| No TypeScript | `-UseTypeScript:$false` | `--no-typescript` | Disable TypeScript |
+| No SCSS | `-UseSCSS:$false` | `--no-scss` | Disable SCSS |
+| Help | `-Help` | `-h, --help` | Show help information |
+
+## 🏗️ Project Types
+
+### 1. Next.js Frontend
+Creates a modern React application with:
+- Next.js 14+ with App Router
+- TypeScript support (configurable)
+- SCSS with organized structure
+- Component organization (UI, forms, layout)
+- Utility functions and hooks
+- Type definitions and constants
+
+### 2. Node.js Backend
+Creates a robust API server with:
+- Express.js framework
+- TypeScript support (configurable)
+- Organized folder structure (controllers, models, routes, etc.)
+- Testing setup with Jest
+- Environment configuration
+- Logging with Winston
+
+### 3. Full-Stack (Both)
+Creates a complete project with:
+- Separate `frontend/` and `backend/` directories
+- Both Next.js and Node.js setups
+- Root README with setup instructions
+- Coordinated development workflow
+
+## 📁 Generated Project Structure
+
+### Next.js Project
+```
+myapp/
 ├── components/
 │   ├── ui/
 │   ├── forms/
@@ -74,10 +128,9 @@ my-nextjs-app/
 └── ... (Next.js default files)
 ```
 
-### Node.js Project Structure
-
+### Node.js Project
 ```
-my-nodejs-api/
+myapi/
 ├── src/
 │   ├── controllers/
 │   ├── models/
@@ -92,127 +145,103 @@ my-nodejs-api/
 │   └── integration/
 ├── docs/
 ├── logs/
-├── tsconfig.json (if TypeScript enabled)
+├── tsconfig.json (if TypeScript)
 └── package.json
 ```
 
-### Both Projects Structure
+## 🎨 SCSS Features
 
-```
-my-fullstack-app/
-├── frontend/          # Next.js application
-├── backend/           # Node.js API server
-└── README.md          # Project documentation
-```
+When SCSS is enabled, the script creates:
+- **Variables**: Color schemes, typography, spacing
+- **Mixins**: Common patterns like flexbox centering, responsive breakpoints
+- **Component Styles**: Organized component styling
+- **Global Styles**: Main stylesheet with imports
 
-## Package Managers
+## 🔧 Configuration
 
-The script automatically detects and uses the best available package manager:
+### TypeScript
+- Enabled by default
+- Modern ES2020 target
+- Strict mode enabled
+- Decorator support for backend projects
 
-1. **yarn** (if `-UseYarn` flag is set and yarn is available)
-2. **pnpm** (if `-UsePnpm` flag is set and pnpm is available)
-3. **npm** (default fallback)
+### Package Managers
+- **npm**: Default, always available
+- **Yarn**: Faster, better dependency resolution
+- **pnpm**: Most efficient disk usage
 
-## Dependencies
+## 🚨 Important Notes
 
-### Next.js Dependencies
-- Latest Next.js version
-- React and React DOM
-- TypeScript (if enabled)
-- SCSS support (if enabled)
+- **Project Names**: Must be lowercase, contain only letters, numbers, and hyphens
+- **Directory Cleanup**: Script will prompt before overwriting existing projects
+- **Error Handling**: Automatic cleanup on failures to prevent partial setups
+- **Cross-Platform**: Both scripts provide identical functionality
 
-### Node.js Dependencies
-- Express.js
-- CORS, Helmet, Morgan
-- Winston for logging
-- Jest for testing
-- TypeScript (if enabled)
-- Development tools (nodemon, ts-node-dev)
+## 📝 Examples
 
-## Examples
-
-### Example 1: Quick Next.js Setup
-```powershell
-.\setup.ps1 -ProjectType "nextjs" -ProjectName "portfolio-website"
-```
-
-### Example 2: Full-Stack Project with Yarn
-```powershell
-.\setup.ps1 -ProjectType "both" -ProjectName "ecommerce-app" -UseYarn
-```
-
-### Example 3: Node.js API with Custom Path
-```powershell
-.\setup.ps1 -ProjectType "nodejs" -ProjectName "user-api" -ProjectPath "C:\APIs"
-```
-
-## Quick Start with ProjectForge
-
-```powershell
-# Create a modern Next.js app
-.\setup.ps1 -ProjectType "nextjs" -ProjectName "my-awesome-app"
-
-# Create a full-stack project
-.\setup.ps1 -ProjectType "both" -ProjectName "my-fullstack-project"
-```
-
-## After Setup
-
-Once your project is created, follow these steps:
-
-### For Next.js Projects
+### Create a Next.js blog app
 ```bash
-cd your-project-name
-npm install  # or yarn install / pnpm install
-npm run dev  # or yarn dev / pnpm dev
+# Windows
+.\setup.ps1 -ProjectType "nextjs" -ProjectName "blog-app"
+
+# Linux/macOS
+./setup.sh -t "nextjs" -p "blog-app"
 ```
 
-### For Node.js Projects
+### Create a full-stack e-commerce project
 ```bash
-cd your-project-name
-npm install  # or yarn install / pnpm install
-npm run dev  # or yarn dev / pnpm dev
+# Windows
+.\setup.ps1 -ProjectType "both" -ProjectName "ecommerce" -UseYarn
+
+# Linux/macOS
+./setup.sh -t "both" -p "ecommerce" --yarn
 ```
 
-### For Both Projects
+### Create a Node.js API without TypeScript
 ```bash
-cd your-project-name
+# Windows
+.\setup.ps1 -ProjectType "nodejs" -ProjectName "api-server" -UseTypeScript:$false
 
-# Frontend
-cd frontend
-npm install
-npm run dev
-
-# Backend (in new terminal)
-cd backend
-npm install
-npm run dev
+# Linux/macOS
+./setup.sh -t "nodejs" -p "api-server" --no-typescript
 ```
 
-## Troubleshooting
+## 🆘 Troubleshooting
 
 ### Common Issues
 
-1. **PowerShell Execution Policy**: If you get execution policy errors, run:
+1. **PowerShell Execution Policy**: If you get execution policy errors on Windows, run:
    ```powershell
    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
    ```
 
-2. **Node.js Not Found**: Make sure Node.js is installed and in your PATH
+2. **Permission Denied on Linux/macOS**: Make sure the script is executable:
+   ```bash
+   chmod +x setup.sh
+   ```
 
-3. **Permission Denied**: Run PowerShell as Administrator if needed
+3. **Node.js Not Found**: Install Node.js from [nodejs.org](https://nodejs.org/)
 
-### Error Messages
+4. **Project Name Validation**: Ensure project names follow the naming convention
 
-- **"Node.js is not installed"**: Install Node.js from [nodejs.org](https://nodejs.org/)
-- **"Project directory already exists"**: Choose to overwrite or use a different name
-- **"Package manager not found"**: The script will fall back to npm
+### Getting Help
+```bash
+# Windows
+.\setup.ps1 -Help
 
-## Contributing
+# Linux/macOS
+./setup.sh -h
+```
 
-Feel free to submit issues and enhancement requests to help improve ProjectForge!
+## 🤝 Contributing
 
-## License
+Feel free to submit issues, feature requests, or pull requests to improve ProjectForge!
 
-ProjectForge is open source and available under the MIT License.
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+---
+
+**Happy coding! 🎉**
 
